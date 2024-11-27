@@ -1,4 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('todo')
-export class TodoController {}
+@UseGuards(AuthGuard)
+export class TodoController {
+  @Get('all')
+  showAll() {
+    return 'all todos';
+  }
+}

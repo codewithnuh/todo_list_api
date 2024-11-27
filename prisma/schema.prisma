@@ -10,5 +10,20 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./todo.db"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  todos    Todo[] // This creates a one-to-many relationship
+}
+
+model Todo {
+  id        Int     @id @default(autoincrement())
+  title     String
+  completed Boolean @default(false)
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int // This foreign key connects each todo to a specific user
 }
